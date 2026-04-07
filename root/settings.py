@@ -1,6 +1,10 @@
 from pathlib import Path
 import os.path
 
+from dotenv import load_dotenv
+
+load_dotenv('.env')
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -11,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-r3%opzua)em$3qd#y(8sb9m4lh$w4k2b_gezt*!bg+%cp*vp0z'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -54,6 +58,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'apps.context_processor.custom_context',
             ],
         },
     },
@@ -68,11 +73,11 @@ WSGI_APPLICATION = 'root.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': "django.db.backends.postgresql",
-        'NAME': "p37_db",
-        'USER': "postgres",
-        "PASSWORD": "1",
-        'HOST': "localhost",
-        'PORT': "5432",
+        'NAME': os.getenv('POSTGRES_DATABASE'),
+        'USER': os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        'HOST': os.getenv("POSTGRES_HOST"),
+        'PORT': os.getenv("POSTGRES_PORT")
     }
 }
 
@@ -117,4 +122,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# LOGIN_REDIRECT_URL = 'login_page'
+LOGIN_URL = 'login_page'
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
+
+
 

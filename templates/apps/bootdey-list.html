@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Todos</h3>
+
+<form method="get">
+    <input type="text" name="q" placeholder="Search todos..." class="form-control mb-3">
+</form>
+
+<ul class="list-group">
+
+    {% for todo in todos %}
+    <li class="list-group-item d-flex justify-content-between">
+
+        <a href="{% url 'todo_detail' todo.id %}">
+            {{ todo.title }}
+        </a>
+
+        {% if todo.completed %}
+            <span class="badge bg-success">Done</span>
+        {% else %}
+            <span class="badge bg-warning">Pending</span>
+        {% endif %}
+
+    </li>
+    {% endfor %}
+
+</ul>
+
+{% endblock %}

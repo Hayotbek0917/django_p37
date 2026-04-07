@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card p-4">
+
+    <h3>{{ todo.title }}</h3>
+
+    <p>Status:
+        {% if todo.completed %}
+            <span class="text-success">Completed</span>
+        {% else %}
+            <span class="text-warning">Pending</span>
+        {% endif %}
+    </p>
+
+    <a href="{% url 'todo_update' todo.id %}" class="btn btn-warning">Update</a>
+
+    <form method="post" action="{% url 'todo_delete' todo.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button class="btn btn-danger">Delete</button>
+    </form>
+
+</div>
+
+{% endblock %}
